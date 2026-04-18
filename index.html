@@ -1,0 +1,188 @@
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<!-- Perplexity Computer Attribution -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Рафаил — Прототип v2</title>
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="prototype-wrapper">
+  <div class="phone-frame">
+    <div class="phone-notch"></div>
+    <div class="phone-screen" id="app"></div>
+  </div>
+  <div class="screen-label" id="screen-label">Загрузка...</div>
+</div>
+
+<!-- OVERLAY -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal()"></div>
+
+<!-- MODAL: Трeba -->
+<div class="modal" id="treba-modal">
+  <div class="modal-header">
+    <h3>Подать записку</h3>
+    <button class="icon-btn" onclick="closeModal()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="treba-types">
+      <button class="treba-btn active" onclick="selectTrebaType(this)">
+        <span class="treba-emoji">🕊️</span><span>О здравии</span>
+      </button>
+      <button class="treba-btn" onclick="selectTrebaType(this)">
+        <span class="treba-emoji">✝️</span><span>О упокоении</span>
+      </button>
+      <button class="treba-btn" onclick="selectTrebaType(this)">
+        <span class="treba-emoji">🕯️</span><span>Сорокоуст</span>
+      </button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Имена (по одному)</label>
+      <textarea class="form-input" rows="3" placeholder="Иван&#10;Мария&#10;Петр"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Дата поминовения</label>
+      <input type="date" class="form-input">
+    </div>
+    <div class="treba-price">
+      <span style="font-size:13px;color:var(--color-text-muted)">Стоимость:</span>
+      <span class="price-val">15.00 BYN</span>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="submitTreba()">Оплатить</button>
+  </div>
+</div>
+
+<!-- MODAL: Chat -->
+<div class="modal modal-full" id="chat-modal">
+  <div class="modal-header">
+    <button class="icon-btn" onclick="closeModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="chat-modal-header-info">
+      <div class="avatar av-sm" style="background:#2E5090">А</div>
+      <div>
+        <div class="chat-modal-name">Александр</div>
+        <div class="online-row"><span class="online-dot"></span><span class="t-xs muted">В сети</span></div>
+      </div>
+    </div>
+    <button class="icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    </button>
+  </div>
+  <div class="chat-msgs" id="chat-messages">
+    <div class="day-divider">Сегодня</div>
+    <div class="message msg-in">
+      <div class="msg-bubble">Здравствуйте! Я готов помочь вам посетить наш храм. Когда вам удобно?</div>
+      <div class="msg-time">10:32</div>
+    </div>
+    <div class="message msg-out">
+      <div class="msg-bubble">Добрый день! Может быть в воскресенье утром?</div>
+      <div class="msg-time">10:45</div>
+    </div>
+    <div class="message msg-in">
+      <div class="msg-bubble">Отлично! В воскресенье в 9:00 у нас литургия. Встретимся у главного входа?</div>
+      <div class="msg-time">10:47</div>
+    </div>
+    <div class="message msg-out">
+      <div class="msg-bubble">Договорились! Как мне вас узнать?</div>
+      <div class="msg-time">10:50</div>
+    </div>
+    <div class="message msg-in">
+      <div class="msg-bubble">Я буду в синей куртке. До встречи! 🙏</div>
+      <div class="msg-time">10:51</div>
+    </div>
+  </div>
+  <div class="chat-input-bar">
+    <button class="icon-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+    </button>
+    <input type="text" class="chat-input" placeholder="Написать сообщение..." id="chat-input-field">
+    <button class="send-btn" onclick="sendMessage()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
